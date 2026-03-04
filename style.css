@@ -1,12 +1,13 @@
 /* Estilo geral da página */
 body {
-  body {
+body {
     display: flex;
-    flex-direction: column; /* Coloca um item abaixo do outro */
-    align-items: center;    /* Centraliza na horizontal */
-    justify-content: center; /* Centraliza na vertical */
-    height: 100vh;          /* Faz o corpo ocupar a altura toda da tela */
+    flex-direction: column;
+    align-items: center;     /* Centraliza na horizontal */
+    justify-content: flex-start; /* Alinha no topo */
+    height: 100vh;           /* Altura total da tela */
     margin: 0;
+    padding-top: 15vh;       /* Empurra 15% para baixo (ajuste esse valor) */
 }
   font-family: Arial, sans-serif;
   background-color: #8ad0fc;
