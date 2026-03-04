@@ -17,7 +17,7 @@ body {
     align-items: center;      /* Centraliza na horizontal */
     justify-content: center;  /* Centraliza na vertical */
     
-    min-height: 100vh;        /* Altura de 100% da tela visível */
+    min-height: 130vh;        /* Altura de 100% da tela visível */
     overflow-x: hidden;       /* Evita barra de rolagem horizontal */
 }
 
