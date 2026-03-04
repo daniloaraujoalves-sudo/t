@@ -1,11 +1,19 @@
 /* Estilo geral da página */
 body {
+  body {
+    display: flex;
+    flex-direction: column; /* Coloca um item abaixo do outro */
+    align-items: center;    /* Centraliza na horizontal */
+    justify-content: center; /* Centraliza na vertical */
+    height: 100vh;          /* Faz o corpo ocupar a altura toda da tela */
+    margin: 0;
+}
   font-family: Arial, sans-serif;
   background-color: #8ad0fc;
   color: #000000;
   margin: 200px;
   padding: 400px;
-  
+
 }
 
 /* Cabeçalho */
