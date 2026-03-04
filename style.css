@@ -1,73 +1,80 @@
-/* Estilo geral da página */
+/* 1. Reset básico para evitar espaços indesejados */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 2. O CORPO DA PÁGINA (Onde a mágica da centralização acontece) */
 body {
-body {
+    font-family: Arial, sans-serif;
+    background-color: #8ad0fc; /* Azul claro */
+    color: #000000;
+    
+    /* Flexbox para centralizar tudo */
     display: flex;
     flex-direction: column;
-    align-items: center;     /* Centraliza na horizontal */
-    justify-content: flex-start; /* Alinha no topo */
-    height: 300vh;           /* Altura total da tela */
-    margin: 0;
-    padding-top: 0vh;       /* Empurra 0% para baixo (ajuste esse valor) */
-}
-  font-family: Arial, sans-serif;
-  background-color: #8ad0fc;
-  color: #000000;
-  margin: 200px;
-  padding: 400px;
-
+    align-items: center;      /* Centraliza na horizontal */
+    justify-content: center;  /* Centraliza na vertical */
+    
+    min-height: 100vh;        /* Altura de 100% da tela visível */
+    overflow-x: hidden;       /* Evita barra de rolagem horizontal */
 }
 
-/* Cabeçalho */
+/* 3. CABEÇALHO E MENU (Fixados no topo para não empurrar o centro) */
 header {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 0;
-  text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
 }
 
-/* Navegação */
 nav {
-  background-color: #333;
+    background-color: #333;
+    width: 100%;
+    position: fixed;
+    top: 60px; /* Logo abaixo do header */
 }
 
 nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-}
-
-nav ul li {
-  margin: 0 15px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul li a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
 }
 
 nav ul li a:hover {
-  background-color: #575757;
+    background-color: #575757;
 }
 
-/* Conteúdo principal */
+/* 4. CONTEÚDO PRINCIPAL (A caixa branca no meio) */
 main {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 20px auto;
-  background-color: white;
-  border-radius: 8px;
+    background-color: white;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;               /* Responsivo para celular */
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-top: 100px;        /* Espaço para não ficar embaixo do menu fixo */
 }
 
-/* Rodapé */
+/* 5. RODAPÉ */
 footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
