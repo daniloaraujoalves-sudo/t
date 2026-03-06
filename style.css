@@ -1,80 +1,69 @@
-/* 1. Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELLO World - Estrutura</title>
+    </head>
+<body>
 
-/* 2. O CORPO DA PÁGINA */
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #002c46, #01476f, #380155);
-    display: flex;
-    flex-direction: column;
-    align-items: center;      
-    
-    /* Centralização ajustada: */
-    justify-content: flex-start; /* Alinha ao topo */
-    padding-top: 20vh;           /* Empurra para baixo até ficar "quase" no meio */
-    
-    min-height: 100vh;           /* Altura da tela real (sem rolagem desnecessária) */
-    overflow-x: hidden;
-}
+<canvas id="starCanvas"></canvas>
 
-/* 3. CABEÇALHO E MENU (Fixos) */
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 0;
-    text-align: center;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000; /* Garante que fique na frente de tudo */
-}
+<header>
+    <h1>Hcode Space</h1>
+</header>
 
-nav {
-    background-color: #333;
-    width: 100%;
-    position: fixed;
-    top: 50px; /* Ajuste dependendo da altura do seu header */
-    z-index: 999;
-}
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Galáxia</a></li>
+        <li><a href="#">Contato</a></li>
+    </ul>
+</nav>
 
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-}
+<main>
+    <div class="gif-container">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta Neon">
+    </div>
+    <h1 class="frase">Hello, World!</h1>
+</main>
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 12px 20px;
-    display: block;
-}
+<footer>
+    &copy; 2026 - Desenvolvido com Estilo Neon
+</footer>
 
-/* 4. CONTEÚDO PRINCIPAL (A caixa branca) */
-main {
-    background-color: white;
-    padding: 40px;
-    max-width: 600px;
-    width: 90%;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    
-    /* Removi o margin-top exagerado para usar o padding do body */
-    margin-top: 50px; 
-}
+<script>
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
 
-/* 5. RODAPÉ */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
+    function setup() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        draw();
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const starCount = Math.floor((canvas.width * canvas.height) / 3000);
+
+        for (let i = 0; i < starCount; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const size = Math.random() * 2;
+
+            ctx.shadowBlur = Math.random() * 10;
+            ctx.shadowColor = "#00ffff"; 
+            ctx.fillStyle = "white"; 
+            
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    window.addEventListener('resize', setup);
+    setup();
+</script>
+
+</body>
+</html>
