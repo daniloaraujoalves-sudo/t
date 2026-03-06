@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estrelas Corrigidas</title>
+    <title>Estrelas Neon Corrigidas</title>
     <style>
         body { 
             margin: 0; 
             padding: 0;
             overflow: hidden; 
-            background-color: #ffffff; /* Fundo branco */
+            /* O segredo do neon é o fundo escuro */
+            background-color: #0a0a0b; 
         }
-        canvas { 
-            display: block; 
-            image-rendering: pixelated; /* Mantém os pontos nítidos */
-        }
+        canvas { display: block; }
     </style>
 </head>
 <body>
@@ -25,47 +23,40 @@
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Função para ajustar o tamanho e redesenhar
-    function setupCanvas() {
+    function setup() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        drawStars();
+        draw();
     }
 
-    function drawStars() {
-        // Limpa o canvas antes de desenhar
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Define a cor dos pontos (estrelas pretas)
-        ctx.fillStyle = "black"; 
+    function draw() {
+        // Limpa com a cor do fundo
+        ctx.fillStyle = "#0a0a0b";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Calcula a quantidade de estrelas baseada na área da tela
-        // Aproximadamente 1 estrela para cada 2500 pixels quadrados
-        const starCount = Math.floor((canvas.width * canvas.height) / 2500);
+        const starCount = Math.floor((canvas.width * canvas.height) / 3000);
 
         for (let i = 0; i < starCount; i++) {
             const x = Math.random() * canvas.width;
             const y = Math.random() * canvas.height;
-            
-            // Variação de tamanho: a maioria tem 1px, algumas têm 2px
-            const size = Math.random() > 0.9 ? 2 : 1; 
+            const size = Math.random() * 2 + 0.5;
 
-            // Define opacidade aleatória para dar profundidade
-            ctx.globalAlpha = Math.random() * 0.8 + 0.2;
+            // --- A MÁGICA DO NEON ---
+            ctx.shadowBlur = 8;           // Tamanho do brilho
+            ctx.shadowColor = "#00ffff";  // Cor do neon (Ciano)
+            ctx.fillStyle = "#ffffff";    // Cor do centro (Branco p/ brilhar)
             
-            // Desenha o ponto (quadrado é mais rápido que círculo)
-            ctx.fillRect(x, y, size, size);
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Reseta a sombra para não pesar no próximo cálculo (importante!)
+            ctx.shadowBlur = 0;
         }
-        
-        // Reseta a opacidade global para não afetar outros desenhos
-        ctx.globalAlpha = 1.0;
     }
 
-    // Escuta o redimensionamento da janela
-    window.addEventListener('resize', setupCanvas);
-
-    // Inicializa
-    setupCanvas();
+    window.addEventListener('resize', setup);
+    setup();
 </script>
 
 </body>
