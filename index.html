@@ -3,22 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estrelas Neon com Gradiente</title>
+    <title>Estrelas, Frases e GIFs</title>
     <style>
         body { 
             margin: 0; 
             padding: 0;
             overflow: hidden; 
-            /* Aplicando o seu gradiente aqui */
             background: linear-gradient(to bottom, #002c46, #01476f, #380155);
             height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        canvas { display: block; }
+
+        /* O Canvas fica fixo no fundo */
+        canvas { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1; 
+        }
+
+        /* Conteúdo que aparece na frente */
+        .content {
+            position: relative;
+            z-index: 2; /* Garante que fica acima das estrelas */
+            text-align: center;
+            color: white;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+        }
+
+        .frase {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .gif-container img {
+            max-width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
 
 <canvas id="starCanvas"></canvas>
+
+<div class="content">
+    <div class="gif-container">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/3o7TKVUn7iM8FMEU24/giphy.gif" alt="Meu GIF">
+    </div>
+    <h1 class="frase">Sua frase personalizada aqui!</h1>
+</div>
 
 <script>
     const canvas = document.getElementById('starCanvas');
@@ -31,10 +69,7 @@
     }
 
     function draw() {
-        // MUDANÇA AQUI: Em vez de preencher com cor sólida (#0a0a0b), 
-        // limpamos o canvas para o gradiente do fundo (CSS) aparecer.
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         const starCount = Math.floor((canvas.width * canvas.height) / 3000);
 
         for (let i = 0; i < starCount; i++) {
@@ -49,7 +84,6 @@
             ctx.beginPath();
             ctx.arc(x, y, size, 0, Math.PI * 2);
             ctx.fill();
-
             ctx.shadowBlur = 0;
         }
     }
