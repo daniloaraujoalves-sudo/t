@@ -3,60 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HELLO World</title>
+    <title>HELLO World - Neon Edition</title>
     <style>
-        body { 
-            margin: 0; 
+        /* 1. Reset básico e Variáveis */
+        * {
+            margin: 0;
             padding: 0;
-            overflow: hidden; 
-            background: radial-gradient(circle at center, #6c8cad 0%, #000814 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', sans-serif;
+            box-sizing: border-box;
         }
 
+        /* 2. O CORPO DA PÁGINA */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            /* Gradiente misturado com o fundo escuro das estrelas */
+            background: linear-gradient(to bottom, #000814, #01476f, #380155);
+            display: flex;
+            flex-direction: column;
+            align-items: center;      
+            justify-content: flex-start;
+            padding-top: 15vh;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Canvas de Estrelas (Fundo) */
         canvas { 
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             z-index: 1; 
+            pointer-events: none; /* Permite clicar nos botões através do canvas */
         }
 
-        .content {
-            position: relative;
-            z-index: 2;
+        /* 3. CABEÇALHO E MENU (Fixos) */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
             text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
+        nav {
+            background-color: #333;
+            width: 100%;
+            position: fixed;
+            top: 50px; 
+            z-index: 999;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            display: block;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #4CAF50;
+        }
+
+        /* 4. CONTEÚDO PRINCIPAL (A caixa neon) */
+        main {
+            position: relative;
+            z-index: 2; /* Fica acima das estrelas */
+            background-color: rgba(255, 255, 255, 0.1); /* Transparente para ver o fundo */
+            backdrop-filter: blur(10px); /* Efeito de vidro embaçado */
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+            margin-bottom: 60px;
+        }
+
+        /* EFEITOS NEON (GIF E TEXTO) */
         .frase {
             font-size: 3rem;
             margin-top: 20px;
             font-weight: bold;
             color: #fff;
-            /* O segredo do Neon está aqui: várias camadas de sombra */
             text-shadow: 
                 0 0 5px #fff,
-                0 0 10px #fff,
                 0 0 20px #00ffff,
-                0 0 40px #00ffff,
-                0 0 80px #00ffff;
+                0 0 40px #00ffff;
             animation: pulse 1.5s infinite alternate;
         }
 
-        /* Efeito de piscar/pulsar do Neon */
-        @keyframes pulse {
-            from { opacity: 1; }
-            to { opacity: 0.8; text-shadow: 0 0 10px #fff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+        .gif-container img {
+            max-width: 250px;
+            border-radius: 20px;
+            /* O SEGREDO DO NEON NO GIF: */
+            filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            animation: pulse 1.5s infinite alternate;
         }
 
-        .gif-container img {
-            max-width: 280px;
-            border-radius: 20px;
-            /* Brilho neon ao redor do GIF também */
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+        @keyframes pulse {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.8; transform: scale(1.02); }
+        }
+
+        /* 5. RODAPÉ */
+        footer {
+            background-color: #111;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -64,12 +136,28 @@
 
 <canvas id="starCanvas"></canvas>
 
-<div class="content">
+<header>
+    <h1>Hcode Space</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Galáxia</a></li>
+        <li><a href="#">Contato</a></li>
+    </ul>
+</nav>
+
+<main>
     <div class="gif-container">
-        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Meu GIF">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta Neon">
     </div>
     <h1 class="frase">Hello, World!</h1>
-</div>
+</main>
+
+<footer>
+    &copy; 2024 - Desenvolvido com Estilo Neon
+</footer>
 
 <script>
     const canvas = document.getElementById('starCanvas');
@@ -83,16 +171,14 @@
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Aumentei um pouco a densidade
-        const starCount = Math.floor((canvas.width * canvas.height) / 2500);
+        const starCount = Math.floor((canvas.width * canvas.height) / 3000);
 
         for (let i = 0; i < starCount; i++) {
             const x = Math.random() * canvas.width;
             const y = Math.random() * canvas.height;
-            const size = Math.random() * 2 + 1;
+            const size = Math.random() * 2;
 
-            // Efeito de brilho nas estrelas
-            ctx.shadowBlur = Math.random() * 10 + 5;
+            ctx.shadowBlur = Math.random() * 10;
             ctx.shadowColor = "#00ffff"; 
             ctx.fillStyle = "white"; 
             
