@@ -1,57 +1,110 @@
-const canvas = document.getElementById('starCanvas');
-const ctx = canvas.getContext('2d');
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrelas, Frases e GIFs Neon</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0;
+            overflow: hidden; 
+            background: radial-gradient(circle at center, #001d3d 0%, #000814 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-let stars = [];
+        canvas { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1; 
+        }
 
-function setup() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    // Criamos as estrelas como objetos para podermos animar o brilho
-    stars = [];
-    const starCount = Math.floor((canvas.width * canvas.height) / 3000);
-    
-    for (let i = 0; i < starCount; i++) {
-        stars.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: Math.random() * 2 + 0.5,
-            blink: Math.random() * 0.05, // Velocidade da pulsação
-            opacity: Math.random()
-        });
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .frase {
+            font-size: 3rem;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #fff;
+            /* O segredo do Neon está aqui: várias camadas de sombra */
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 80px #00ffff;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        /* Efeito de piscar/pulsar do Neon */
+        @keyframes pulse {
+            from { opacity: 1; }
+            to { opacity: 0.8; text-shadow: 0 0 10px #fff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+        }
+
+        .gif-container img {
+            max-width: 280px;
+            border-radius: 20px;
+            /* Brilho neon ao redor do GIF também */
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="starCanvas"></canvas>
+
+<div class="content">
+    <div class="gif-container">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Meu GIF">
+    </div>
+    <h1 class="frase">Hello, World!</h1>
+</div>
+
+<script>
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function setup() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        draw();
     }
-}
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Aumentei um pouco a densidade
+        const starCount = Math.floor((canvas.width * canvas.height) / 2500);
 
-    stars.forEach(star => {
-        // Faz o brilho "oscilar" para parecer neon real
-        star.opacity += star.blink;
-        if (star.opacity > 1 || star.opacity < 0.2) star.blink *= -1;
+        for (let i = 0; i < starCount; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const size = Math.random() * 2 + 1;
 
-        // Camada 1: O brilho externo (Aura Neon)
-        ctx.shadowBlur = 15 * star.opacity; 
-        ctx.shadowColor = "#00ffff";
-        
-        // Camada 2: O brilho médio
-        ctx.fillStyle = `rgba(0, 255, 255, ${star.opacity})`;
-        
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
+            // Efeito de brilho nas estrelas
+            ctx.shadowBlur = Math.random() * 10 + 5;
+            ctx.shadowColor = "#00ffff"; 
+            ctx.fillStyle = "white"; 
+            
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
 
-        // Camada 3: O núcleo branco (o centro da lâmpada neon)
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = "white";
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size * 0.5, 0, Math.PI * 2);
-        ctx.fill();
-    });
+    window.addEventListener('resize', setup);
+    setup();
+</script>
 
-    requestAnimationFrame(draw); // Isso faz o neon brilhar e piscar em tempo real
-}
-
-window.addEventListener('resize', setup);
-setup();
-draw();
+</body>
+</html>
