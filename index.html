@@ -3,32 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Primeiro Site</title>
-    
+    <title>Estrelas Corrigidas</title>
     <style>
-        /* O CSS entra aqui dentro */
-        body { background: linear-gradient(to bottom, #002c46, #01476f, #380155); text-align: center; }
-        
-        .gif-neon {
-            filter: drop-shadow(0 0 10px #00f7ff) drop-shadow(0 0 20px #ff0044);
-            animation: pulsar 10s infinite alternate;
+        body { 
+            margin: 0; 
+            padding: 0;
+            overflow: hidden; 
+            background-color: #ffffff; /* Fundo branco */
         }
-
-        @keyframes pulsar {
-            from { filter: drop-shadow(0 0 5px #00f7ff); }
-            to { filter: drop-shadow(0 0 5px #00f7ff) drop-shadow(0 0 40px #00f7ff); }
+        canvas { 
+            display: block; 
+            image-rendering: pixelated; /* Mantém os pontos nítidos */
         }
     </style>
 </head>
 <body>
 
-    <h1>Danilo</h1>
-    <p>Hello World!</p>
+<canvas id="starCanvas"></canvas>
 
-    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTNpbjB0cWJ1cHlja3JjY3NicXEweXV0bnV0emtmcG55bDZ2czBiYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" 
-         alt="Um GIF animado de exemplo" 
-         class="gif-neon" 
-         width="300">
+<script>
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Função para ajustar o tamanho e redesenhar
+    function setupCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        drawStars();
+    }
+
+    function drawStars() {
+        // Limpa o canvas antes de desenhar
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Define a cor dos pontos (estrelas pretas)
+        ctx.fillStyle = "black"; 
+
+        // Calcula a quantidade de estrelas baseada na área da tela
+        // Aproximadamente 1 estrela para cada 2500 pixels quadrados
+        const starCount = Math.floor((canvas.width * canvas.height) / 2500);
+
+        for (let i = 0; i < starCount; i++) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            
+            // Variação de tamanho: a maioria tem 1px, algumas têm 2px
+            const size = Math.random() > 0.9 ? 2 : 1; 
+
+            // Define opacidade aleatória para dar profundidade
+            ctx.globalAlpha = Math.random() * 0.8 + 0.2;
+            
+            // Desenha o ponto (quadrado é mais rápido que círculo)
+            ctx.fillRect(x, y, size, size);
+        }
+        
+        // Reseta a opacidade global para não afetar outros desenhos
+        ctx.globalAlpha = 1.0;
+    }
+
+    // Escuta o redimensionamento da janela
+    window.addEventListener('resize', setupCanvas);
+
+    // Inicializa
+    setupCanvas();
+</script>
 
 </body>
 </html>
