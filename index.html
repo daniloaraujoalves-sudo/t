@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estrelas Neon Corrigidas</title>
+    <title>Estrelas Neon com Gradiente</title>
     <style>
         body { 
             margin: 0; 
             padding: 0;
             overflow: hidden; 
-            /* O segredo do neon é o fundo escuro */
-            background-color: #0a0a0b; 
+            /* Aplicando o seu gradiente aqui */
+            background: linear-gradient(to bottom, #002c46, #01476f, #380155);
+            height: 100vh;
         }
         canvas { display: block; }
     </style>
@@ -30,9 +31,9 @@
     }
 
     function draw() {
-        // Limpa com a cor do fundo
-        ctx.fillStyle = "#0a0a0b";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // MUDANÇA AQUI: Em vez de preencher com cor sólida (#0a0a0b), 
+        // limpamos o canvas para o gradiente do fundo (CSS) aparecer.
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         const starCount = Math.floor((canvas.width * canvas.height) / 3000);
 
@@ -41,16 +42,14 @@
             const y = Math.random() * canvas.height;
             const size = Math.random() * 2 + 0.5;
 
-            // --- A MÁGICA DO NEON ---
-            ctx.shadowBlur = 8;           // Tamanho do brilho
-            ctx.shadowColor = "#00ffff";  // Cor do neon (Ciano)
-            ctx.fillStyle = "#ffffff";    // Cor do centro (Branco p/ brilhar)
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "#00ffff"; 
+            ctx.fillStyle = "#ffffff"; 
             
             ctx.beginPath();
             ctx.arc(x, y, size, 0, Math.PI * 2);
             ctx.fill();
 
-            // Reseta a sombra para não pesar no próximo cálculo (importante!)
             ctx.shadowBlur = 0;
         }
     }
