@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estrelas, Frases e GIFs Neon</title>
+    <title>Estrelas, Frases e GIFs</title>
     <style>
         body { 
             margin: 0; 
             padding: 0;
             overflow: hidden; 
-            background: radial-gradient(circle at center, #001d3d 0%, #000814 100%);
+            background: linear-gradient(to bottom, #002c46, #01476f, #380155);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* O Canvas fica fixo no fundo */
         canvas { 
             position: absolute;
             top: 0;
@@ -24,39 +25,25 @@
             z-index: 1; 
         }
 
+        /* Conteúdo que aparece na frente */
         .content {
             position: relative;
-            z-index: 2;
+            z-index: 2; /* Garante que fica acima das estrelas */
             text-align: center;
+            color: white;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
         }
 
         .frase {
-            font-size: 3rem;
-            margin-top: 20px;
+            font-size: 2rem;
+            margin-bottom: 20px;
             font-weight: bold;
-            color: #fff;
-            /* O segredo do Neon está aqui: várias camadas de sombra */
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 20px #00ffff,
-                0 0 40px #00ffff,
-                0 0 80px #00ffff;
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        /* Efeito de piscar/pulsar do Neon */
-        @keyframes pulse {
-            from { opacity: 1; }
-            to { opacity: 0.8; text-shadow: 0 0 10px #fff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
         }
 
         .gif-container img {
-            max-width: 280px;
-            border-radius: 20px;
-            /* Brilho neon ao redor do GIF também */
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            max-width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -83,22 +70,21 @@
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Aumentei um pouco a densidade
-        const starCount = Math.floor((canvas.width * canvas.height) / 2500);
+        const starCount = Math.floor((canvas.width * canvas.height) / 3000);
 
         for (let i = 0; i < starCount; i++) {
             const x = Math.random() * canvas.width;
             const y = Math.random() * canvas.height;
-            const size = Math.random() * 2 + 1;
+            const size = Math.random() * 2 + 0.5;
 
-            // Efeito de brilho nas estrelas
-            ctx.shadowBlur = Math.random() * 10 + 5;
+            ctx.shadowBlur = 8;
             ctx.shadowColor = "#00ffff"; 
-            ctx.fillStyle = "white"; 
+            ctx.fillStyle = "#ffffff"; 
             
             ctx.beginPath();
             ctx.arc(x, y, size, 0, Math.PI * 2);
             ctx.fill();
+            ctx.shadowBlur = 0;
         }
     }
 
