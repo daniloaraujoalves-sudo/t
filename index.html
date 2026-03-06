@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Primeiro Site</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* O CSS entra aqui dentro */
+        body { background-color: #121212; color: white; text-align: center; }
+        
+        .gif-neon {
+            filter: drop-shadow(0 0 10px #00f7ff) drop-shadow(0 0 20px #00f7ff);
+            animation: pulsar 1.5s infinite alternate;
+        }
+
+        @keyframes pulsar {
+            from { filter: drop-shadow(0 0 5px #00f7ff); }
+            to { filter: drop-shadow(0 0 20px #00f7ff) drop-shadow(0 0 40px #00f7ff); }
+        }
+    </style>
 </head>
 <body>
 
@@ -13,6 +27,7 @@
 
     <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTNpbjB0cWJ1cHlja3JjY3NicXEweXV0bnV0emtmcG55bDZ2czBiYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" 
          alt="Um GIF animado de exemplo" 
+         class="gif-neon" 
          width="300">
 
 </body>
