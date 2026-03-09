@@ -3,121 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HELLO World - Neon Edition</title>
+    <title>HELLO World - Deep Space Edition</title>
     <style>
-        /* 1. Reset básico e Variáveis */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* 2. O CORPO DA PÁGINA */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(to bottom, #000814, #01476f, #380155);
             display: flex;
-            flex-direction: column;
             align-items: center;      
-            justify-content: center; /* Centraliza verticalmente agora que o topo sumiu */
+            justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow: hidden; /* Evita barras de rolagem com os objetos flutuando */
             color: white;
+            position: relative;
         }
 
-        /* Canvas de Estrelas (Fundo) */
+        /* 1. EFEITO DE NEVOA EM MOVIMENTO */
+        .fog {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.05) 0%, transparent 60%);
+            z-index: 1;
+            pointer-events: none;
+            animation: moveFog 25s linear infinite alternate;
+        }
+
+        @keyframes moveFog {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(10%, 10%) rotate(5deg); }
+        }
+
         canvas { 
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 1; 
+            z-index: 0; 
             pointer-events: none;
         }
 
-        /* 3. CONTEÚDO PRINCIPAL */
+        /* 2. ESTILO PARA OS GIFS TRANSLÚCIDOS FLUTUANTES */
+        .floating-gif {
+            position: absolute;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.25; /* Imagem translúcida */
+            filter: blur(1px); /* Suaviza as bordas para parecer parte do fundo */
+            animation: floatAround linear infinite;
+        }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, 100px) rotate(180deg); }
+            100% { transform: translate(-50px, 0px) rotate(360deg); }
+        }
+
+        /* 3. CONTEÚDO PRINCIPAL (CARD) */
         main {
             position: relative;
-            z-index: 2;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            z-index: 10; 
+            background-color: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
             padding: 40px;
-            max-width: 600px;
+            max-width: 500px;
             width: 90%;
-            border-radius: 20px;
+            border-radius: 30px;
             text-align: center;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* EFEITOS NEON */
         .frase {
             font-size: 3rem;
             margin-top: 20px;
             font-weight: bold;
             color: #fff;
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 20px #00ffff,
-                0 0 40px #00ffff;
-            animation: pulse 1.5s infinite alternate;
+            text-shadow: 0 0 15px #00ffff;
         }
 
-        .gif-container img {
-            max-width: 250px;
-            border-radius: 20px;
-            filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0.8; transform: scale(1.02); }
+        .gif-principal img {
+            max-width: 200px;
+            filter: drop-shadow(0 0 15px #00ffff);
         }
     </style>
 </head>
 <body>
 
+<div class="fog"></div>
 <canvas id="starCanvas"></canvas>
 
 <main>
-    <div class="gif-container">
-        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta Neon">
+    <div class="gif-principal">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta">
     </div>
     <h1 class="frase">Hello, World!</h1>
 </main>
 
 <script>
+    // --- Sistema de Estrelas ---
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
-
     function setup() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         draw();
     }
-
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const starCount = Math.floor((canvas.width * canvas.height) / 3000);
-
-        for (let i = 0; i < starCount; i++) {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            const size = Math.random() * 2;
-
-            ctx.shadowBlur = Math.random() * 10;
-            ctx.shadowColor = "#00ffff"; 
-            ctx.fillStyle = "white"; 
-            
+        for (let i = 0; i < 300; i++) {
+            ctx.fillStyle = "white";
             ctx.beginPath();
-            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.5, 0, Math.PI*2);
             ctx.fill();
         }
     }
-
     window.addEventListener('resize', setup);
     setup();
+
+    // --- Gerador de GIFs Aleatórios ---
+    const gifUrl = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnBsdGpnemR4bXlnbTl3dG55YzhkOXZjZ2x5bGJiOGU1djY3Z2diZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/xT9IgsFcDKywF7orkI/giphy.gif";
+    const totalGifs = 8; // Quantidade de imagens na tela
+
+    for (let i = 0; i < totalGifs; i++) {
+        const img = document.createElement('img');
+        img.src = gifUrl;
+        img.className = 'floating-gif';
+        
+        // Posição inicial randômica
+        img.style.left = Math.random() * 100 + "vw";
+        img.style.top = Math.random() * 100 + "vh";
+        
+        // Tamanhos variados
+        const size = Math.random() * 100 + 50;
+        img.style.width = size + "px";
+        
+        // Velocidades e atrasos diferentes para não parecer mecânico
+        const duration = Math.random() * 15 + 10;
+        const delay = Math.random() * -20; // Começa a animação em pontos diferentes
+        img.style.animationDuration = duration + "s";
+        img.style.animationDelay = delay + "s";
+
+        document.body.appendChild(img);
+    }
 </script>
 
 </body>
