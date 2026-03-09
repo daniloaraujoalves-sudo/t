@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HELLO World - Deep Space Edition</title>
+    <title>HELLO World - Neon Drift</title>
     <style>
         * {
             margin: 0;
@@ -18,27 +18,21 @@
             align-items: center;      
             justify-content: center;
             min-height: 100vh;
-            overflow: hidden; /* Evita barras de rolagem com os objetos flutuando */
+            overflow: hidden; 
             color: white;
             position: relative;
         }
 
-        /* 1. EFEITO DE NEVOA EM MOVIMENTO */
+        /* 1. NEVOA DE FUNDO */
         .fog {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.05) 0%, transparent 60%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
             z-index: 1;
             pointer-events: none;
-            animation: moveFog 25s linear infinite alternate;
-        }
-
-        @keyframes moveFog {
-            from { transform: translate(0, 0) rotate(0deg); }
-            to { transform: translate(10%, 10%) rotate(5deg); }
         }
 
         canvas { 
@@ -46,26 +40,25 @@
             top: 0;
             left: 0;
             z-index: 0; 
-            pointer-events: none;
         }
 
-        /* 2. ESTILO PARA OS GIFS TRANSLÚCIDOS FLUTUANTES */
+        /* 2. CONFIGURAÇÃO DOS GIFS (MAIORES E SÓ EIXO X) */
         .floating-gif {
             position: absolute;
             z-index: 2;
             pointer-events: none;
-            opacity: 0.25; /* Imagem translúcida */
-            filter: blur(1px); /* Suaviza as bordas para parecer parte do fundo */
-            animation: floatAround linear infinite;
+            opacity: 0.2; /* Translucidez */
+            filter: blur(0.5px);
+            /* Animação apenas no Eixo X */
+            animation: moveX linear infinite;
         }
 
-        @keyframes floatAround {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(50px, 100px) rotate(180deg); }
-            100% { transform: translate(-50px, 0px) rotate(360deg); }
+        @keyframes moveX {
+            from { transform: translateX(-20vw); } /* Começa fora da tela à esquerda */
+            to { transform: translateX(120vw); }   /* Vai até fora da tela à direita */
         }
 
-        /* 3. CONTEÚDO PRINCIPAL (CARD) */
+        /* 3. CARD CENTRAL */
         main {
             position: relative;
             z-index: 10; 
@@ -84,7 +77,6 @@
             font-size: 3rem;
             margin-top: 20px;
             font-weight: bold;
-            color: #fff;
             text-shadow: 0 0 15px #00ffff;
         }
 
@@ -107,7 +99,7 @@
 </main>
 
 <script>
-    // --- Sistema de Estrelas ---
+    // --- Estrelas de fundo ---
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
     function setup() {
@@ -117,36 +109,36 @@
     }
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 250; i++) {
             ctx.fillStyle = "white";
             ctx.beginPath();
-            ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.5, 0, Math.PI*2);
+            ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.2, 0, Math.PI*2);
             ctx.fill();
         }
     }
     window.addEventListener('resize', setup);
     setup();
 
-    // --- Gerador de GIFs Aleatórios ---
+    // --- Gerador de GIFs Maiores e Horizontais ---
     const gifUrl = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnBsdGpnemR4bXlnbTl3dG55YzhkOXZjZ2x5bGJiOGU1djY3Z2diZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/xT9IgsFcDKywF7orkI/giphy.gif";
-    const totalGifs = 8; // Quantidade de imagens na tela
+    const totalGifs = 6; // Reduzi a quantidade porque agora eles são maiores
 
     for (let i = 0; i < totalGifs; i++) {
         const img = document.createElement('img');
         img.src = gifUrl;
         img.className = 'floating-gif';
         
-        // Posição inicial randômica
-        img.style.left = Math.random() * 100 + "vw";
-        img.style.top = Math.random() * 100 + "vh";
+        // Espalhamento vertical aleatório
+        img.style.top = Math.random() * 80 + "vh";
         
-        // Tamanhos variados
-        const size = Math.random() * 100 + 50;
+        // Tamanho maior (entre 200px e 400px)
+        const size = Math.random() * 200 + 200;
         img.style.width = size + "px";
         
-        // Velocidades e atrasos diferentes para não parecer mecânico
-        const duration = Math.random() * 15 + 10;
-        const delay = Math.random() * -20; // Começa a animação em pontos diferentes
+        // Velocidades variadas para dar profundidade
+        const duration = Math.random() * 20 + 15;
+        const delay = Math.random() * -30; // Para começarem em pontos diferentes do percurso
+        
         img.style.animationDuration = duration + "s";
         img.style.animationDelay = delay + "s";
 
