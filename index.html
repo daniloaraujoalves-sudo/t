@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HELLO World - Neon Drift</title>
+    <title>HELLO World - Atmosfera Neon</title>
     <style>
         * {
             margin: 0;
@@ -23,18 +23,6 @@
             position: relative;
         }
 
-        /* 1. NEVOA DE FUNDO */
-        .fog {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
         canvas { 
             position: fixed;
             top: 0;
@@ -42,53 +30,65 @@
             z-index: 0; 
         }
 
-        /* 2. CONFIGURAÇÃO DOS GIFS (MAIORES E SÓ EIXO X) */
+        /* 1. CONFIGURAÇÃO DAS NUVENS (NATURAL E HORIZONTAL) */
         .floating-gif {
             position: absolute;
             z-index: 2;
             pointer-events: none;
-            opacity: 0.2; /* Translucidez */
-            filter: blur(0.5px);
-            /* Animação apenas no Eixo X */
-            animation: moveX linear infinite;
+            opacity: 0; /* Começa invisível para o fade-in */
+            filter: blur(2px);
+            /* Animação: Deslocamento X + Opacidade suave */
+            animation: moveNatural linear infinite;
         }
 
-        @keyframes moveX {
-            from { transform: translateX(-20vw); } /* Começa fora da tela à esquerda */
-            to { transform: translateX(120vw); }   /* Vai até fora da tela à direita */
+        @keyframes moveNatural {
+            0% { 
+                transform: translateX(-40vw); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 0.15; /* Surge suavemente ao entrar */
+            }
+            90% { 
+                opacity: 0.15; 
+            }
+            100% { 
+                transform: translateX(110vw); 
+                opacity: 0; /* Some suavemente ao sair */
+            }
         }
 
-        /* 3. CARD CENTRAL */
+        /* 2. CARD CENTRAL (ESTILO VIDRO) */
         main {
             position: relative;
             z-index: 10; 
-            background-color: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
             padding: 40px;
             max-width: 500px;
             width: 90%;
-            border-radius: 30px;
+            border-radius: 40px;
             text-align: center;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .frase {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-top: 20px;
             font-weight: bold;
-            text-shadow: 0 0 15px #00ffff;
+            letter-spacing: -1px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
         }
 
         .gif-principal img {
-            max-width: 200px;
-            filter: drop-shadow(0 0 15px #00ffff);
+            max-width: 180px;
+            filter: drop-shadow(0 0 20px #00ffff);
         }
     </style>
 </head>
 <body>
 
-<div class="fog"></div>
 <canvas id="starCanvas"></canvas>
 
 <main>
@@ -99,7 +99,7 @@
 </main>
 
 <script>
-    // --- Estrelas de fundo ---
+    // --- Estrelas ---
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
     function setup() {
@@ -109,42 +109,24 @@
     }
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < 250; i++) {
-            ctx.fillStyle = "white";
+        for (let i = 0; i < 200; i++) {
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
             ctx.beginPath();
-            ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.2, 0, Math.PI*2);
+            ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.1, 0, Math.PI*2);
             ctx.fill();
         }
     }
     window.addEventListener('resize', setup);
     setup();
 
-    // --- Gerador de GIFs Maiores e Horizontais ---
+    // --- Gerador de Nuvens Naturais ---
     const gifUrl = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnBsdGpnemR4bXlnbTl3dG55YzhkOXZjZ2x5bGJiOGU1djY3Z2diZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/xT9IgsFcDKywF7orkI/giphy.gif";
-    const totalGifs = 6; // Reduzi a quantidade porque agora eles são maiores
+    const totalGifs = 7; 
 
     for (let i = 0; i < totalGifs; i++) {
         const img = document.createElement('img');
         img.src = gifUrl;
         img.className = 'floating-gif';
         
-        // Espalhamento vertical aleatório
-        img.style.top = Math.random() * 80 + "vh";
-        
-        // Tamanho maior (entre 200px e 400px)
-        const size = Math.random() * 200 + 200;
-        img.style.width = size + "px";
-        
-        // Velocidades variadas para dar profundidade
-        const duration = Math.random() * 20 + 15;
-        const delay = Math.random() * -30; // Para começarem em pontos diferentes do percurso
-        
-        img.style.animationDuration = duration + "s";
-        img.style.animationDelay = delay + "s";
-
-        document.body.appendChild(img);
-    }
-</script>
-
-</body>
-</html>
+        // Posição vertical variada (mais espalhado)
+        img.style.top = (Math.random() * 100) -
