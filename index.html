@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HELLO World - Atmosfera Neon</title>
+    <title>Hcode Space - Shooting Stars</title>
     <style>
         * {
             margin: 0;
@@ -12,78 +12,101 @@
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(to bottom, #000814, #01476f, #380155);
-            display: flex;
-            align-items: center;      
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden; 
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at center, #021123 0%, #000 100%);
             color: white;
-            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Evita barras de rolagem durante as animações */
         }
 
-        canvas { 
+        #starCanvas {
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 0; 
+            z-index: -1;
         }
 
-        /* 1. CONFIGURAÇÃO DAS NUVENS (NATURAL E HORIZONTAL) */
-        .floating-gif {
-            position: absolute;
-            z-index: 2;
-            pointer-events: none;
-            opacity: 0; /* Começa invisível para o fade-in */
-            filter: blur(2px);
-            /* Animação: Deslocamento X + Opacidade suave */
-            animation: moveNatural linear infinite;
-        }
-
-        @keyframes moveNatural {
-            0% { 
-                transform: translateX(-40vw); 
-                opacity: 0; 
-            }
-            10% { 
-                opacity: 0.15; /* Surge suavemente ao entrar */
-            }
-            90% { 
-                opacity: 0.15; 
-            }
-            100% { 
-                transform: translateX(110vw); 
-                opacity: 0; /* Some suavemente ao sair */
-            }
-        }
-
-        /* 2. CARD CENTRAL (ESTILO VIDRO) */
-        main {
-            position: relative;
-            z-index: 10; 
-            background-color: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            border-radius: 40px;
+        header {
+            padding: 20px;
             text-align: center;
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            z-index: 10;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .gif-container img {
+            max-width: 200px;
+            filter: drop-shadow(0 0 15px #00ffff);
+            animation: float 4s ease-in-out infinite;
         }
 
         .frase {
             font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-top: 20px;
-            font-weight: bold;
-            letter-spacing: -1px;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
         }
 
-        .gif-principal img {
-            max-width: 180px;
-            filter: drop-shadow(0 0 20px #00ffff);
+        footer {
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
@@ -91,60 +114,114 @@
 
 <canvas id="starCanvas"></canvas>
 
+<header>
+    <h1>Hcode Space</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Galáxia</a></li>
+        <li><a href="#">Contato</a></li>
+    </ul>
+</nav>
+
 <main>
-    <div class="gif-principal">
-        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta">
+    <div class="gif-container">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta Neon">
     </div>
     <h1 class="frase">Hello, World!</h1>
 </main>
 
+<footer>
+    &copy; 2026 - Desenvolvido com Estilo Neon
+</footer>
+
 <script>
-    // --- Estrelas ---
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
-    function setup() {
+    let stars = [];
+    let shootingStars = [];
+
+    function init() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        draw();
-    }
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < 200; i++) {
-            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-            ctx.beginPath();
-            ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.1, 0, Math.PI*2);
-            ctx.fill();
+        stars = [];
+        const starCount = Math.floor((canvas.width * canvas.height) / 3000);
+        
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 1.5,
+                opacity: Math.random()
+            });
         }
     }
-    window.addEventListener('resize', setup);
-    setup();
 
-    // --- Gerador de Nuvens Naturais ---
-    const gifUrl = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnBsdGpnemR4bXlnbTl3dG55YzhkOXZjZ2x5bGJiOGU1djY3Z2diZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/xT9IgsFcDKywF7orkI/giphy.gif";
-    const totalGifs = 7; 
+    class ShootingStar {
+        constructor() {
+            this.reset();
+        }
 
-    for (let i = 0; i < totalGifs; i++) {
-        const img = document.createElement('img');
-        img.src = gifUrl;
-        img.className = 'floating-gif';
-        
-        // Posição vertical variada (mais espalhado)
-        img.style.top = (Math.random() * 100) - 10 + "vh";
-        
-        // Tamanhos bem grandes e variados para naturalidade
-        const size = Math.random() * 300 + 250; 
-        img.style.width = size + "px";
-        
-        // Velocidades lentas e diferentes (entre 25s e 45s)
-        const duration = Math.random() * 20 + 25;
-        // Delay negativo para que já existam nuvens na tela ao carregar
-        const delay = Math.random() * -50; 
-        
-        img.style.animationDuration = duration + "s";
-        img.style.animationDelay = delay + "s";
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = 0;
+            this.length = Math.random() * 80 + 10;
+            this.speed = Math.random() * 10 + 5;
+            this.opacity = 1;
+            this.active = true;
+        }
 
-        document.body.appendChild(img);
+        update() {
+            this.x += this.speed;
+            this.y += this.speed; // Movimento diagonal
+            this.opacity -= 0.01;
+
+            if (this.opacity <= 0 || this.x > canvas.width || this.y > canvas.height) {
+                this.active = false;
+            }
+        }
+
+        draw() {
+            ctx.strokeStyle = `rgba(0, 255, 255, ${this.opacity})`;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x - this.length, this.y - this.length);
+            ctx.stroke();
+        }
     }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Desenhar estrelas fixas
+        stars.forEach(s => {
+            ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity})`;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // Chance aleatória de gerar uma estrela cadente
+        if (Math.random() < 0.02) {
+            shootingStars.push(new ShootingStar());
+        }
+
+        // Atualizar e desenhar estrelas cadentes
+        shootingStars = shootingStars.filter(s => s.active);
+        shootingStars.forEach(s => {
+            s.update();
+            s.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
 </script>
 
 </body>
