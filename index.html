@@ -13,7 +13,6 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            /* VOLTANDO PARA A COR ORIGINAL DO SEU PRIMEIRO CÓDIGO */
             background: linear-gradient(to bottom, #000814, #01476f, #380155);
             display: flex;
             align-items: center;      
@@ -31,7 +30,6 @@
             z-index: 0; 
         }
 
-        /* CONFIGURAÇÃO DAS NUVENS */
         .floating-gif {
             position: absolute;
             z-index: 2;
@@ -42,20 +40,10 @@
         }
 
         @keyframes moveNatural {
-            0% { 
-                transform: translateX(-40vw); 
-                opacity: 0; 
-            }
-            10% { 
-                opacity: 0.15; 
-            }
-            90% { 
-                opacity: 0.15; 
-            }
-            100% { 
-                transform: translateX(110vw); 
-                opacity: 0; 
-            }
+            0% { transform: translateX(-40vw); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateX(110vw); opacity: 0; }
         }
 
         main {
@@ -64,12 +52,26 @@
             text-align: center;
         }
 
+        /* --- AQUI ESTÁ A MUDANÇA NA FRASE --- */
         .frase {
             font-size: 3.5rem;
             margin-top: 20px;
             font-weight: bold;
             letter-spacing: -1px;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            
+            /* 1. Definimos o degradê que você criou */
+            background: linear-gradient(to bottom, #aa069f, #5e17b5, #1204ad);
+            
+            /* 2. Fazemos o fundo "prender" apenas no texto */
+            -webkit-background-clip: text;
+            background-clip: text;
+            
+            /* 3. Deixamos a cor original transparente para o degradê aparecer */
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+
+            /* Brilho neon ajustado para a nova cor */
+            filter: drop-shadow(0 0 15px rgba(94, 23, 181, 0.6));
         }
 
         .gif-principal img {
@@ -96,6 +98,7 @@
 </main>
 
 <script>
+    // Todo o seu JavaScript das estrelas e nuvens permanece igual aqui...
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
@@ -116,7 +119,6 @@
         }
     }
 
-    // --- Lógica Estrelas Cadentes ---
     class ShootingStar {
         constructor() { this.reset(); }
         reset() {
@@ -157,7 +159,6 @@
         requestAnimationFrame(animate);
     }
 
-    // --- Gerador de Nuvens ---
     const gifUrl = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnBsdGpnemR4bXlnbTl3dG55YzhkOXZjZ2x5bGJiOGU1djY3Z2diZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/xT9IgsFcDKywF7orkI/giphy.gif";
     const totalGifs = 7; 
 
