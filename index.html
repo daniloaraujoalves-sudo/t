@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hcode Space - Estrelas Cadentes</title>
+    <title>HELLO World - Atmosfera Completa</title>
     <style>
         * {
             margin: 0;
@@ -12,56 +12,75 @@
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: radial-gradient(circle at center, #021123 0%, #000 100%);
-            color: white;
-            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            /* VOLTANDO PARA A COR ORIGINAL DO SEU PRIMEIRO CÓDIGO */
+            background: linear-gradient(to bottom, #000814, #01476f, #380155);
             display: flex;
             align-items: center;      
             justify-content: center;
-            overflow: hidden; /* Importante para as estrelas não criarem barras de rolagem */
+            min-height: 100vh;
+            overflow: hidden; 
+            color: white;
+            position: relative;
         }
 
-        #starCanvas {
+        #starCanvas { 
             position: fixed;
             top: 0;
             left: 0;
-            z-index: -1;
+            z-index: 0; 
+        }
+
+        /* CONFIGURAÇÃO DAS NUVENS */
+        .floating-gif {
+            position: absolute;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            filter: blur(2px);
+            animation: moveNatural linear infinite;
+        }
+
+        @keyframes moveNatural {
+            0% { 
+                transform: translateX(-40vw); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 0.15; 
+            }
+            90% { 
+                opacity: 0.15; 
+            }
+            100% { 
+                transform: translateX(110vw); 
+                opacity: 0; 
+            }
         }
 
         main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
-
-        .gif-container img {
-            max-width: 220px;
-            filter: drop-shadow(0 0 20px #00ffff);
-            animation: float 4s ease-in-out infinite;
+            position: relative;
+            z-index: 10; 
+            text-align: center;
         }
 
         .frase {
             font-size: 3.5rem;
-            font-weight: 900;
             margin-top: 20px;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+            font-weight: bold;
+            letter-spacing: -1px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        }
+
+        .gif-principal img {
+            max-width: 180px;
+            filter: drop-shadow(0 0 20px #00ffff);
+            animation: float 4s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-25px); }
-        }
-
-        /* Responsividade para telas menores */
-        @media (max-width: 600px) {
-            .frase { font-size: 2.5rem; }
-            .gif-container img { max-width: 160px; }
+            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
@@ -70,8 +89,8 @@
 <canvas id="starCanvas"></canvas>
 
 <main>
-    <div class="gif-container">
-        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta Neon">
+    <div class="gif-principal">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta">
     </div>
     <h1 class="frase">Hello, World!</h1>
 </main>
@@ -86,8 +105,6 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         stars = [];
-        
-        // Estrelas fixas de fundo
         const starCount = Math.floor((canvas.width * canvas.height) / 3000);
         for (let i = 0; i < starCount; i++) {
             stars.push({
@@ -99,69 +116,61 @@
         }
     }
 
+    // --- Lógica Estrelas Cadentes ---
     class ShootingStar {
-        constructor() {
-            this.reset();
-        }
-
+        constructor() { this.reset(); }
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = 0;
-            this.length = Math.random() * 100 + 20;
-            this.speed = Math.random() * 12 + 6;
+            this.length = Math.random() * 80 + 20;
+            this.speed = Math.random() * 10 + 5;
             this.opacity = 1;
             this.active = true;
         }
-
         update() {
             this.x += this.speed;
-            this.y += this.speed; 
-            this.opacity -= 0.012; // Desaparece aos poucos
-
-            if (this.opacity <= 0 || this.x > canvas.width || this.y > canvas.height) {
-                this.active = false;
-            }
+            this.y += this.speed;
+            this.opacity -= 0.015;
+            if (this.opacity <= 0) this.active = false;
         }
-
         draw() {
-            ctx.save();
             ctx.strokeStyle = `rgba(0, 255, 255, ${this.opacity})`;
             ctx.lineWidth = 2;
-            ctx.lineCap = 'round';
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = "#00ffff";
             ctx.beginPath();
             ctx.moveTo(this.x, this.y);
             ctx.lineTo(this.x - this.length, this.y - this.length);
             ctx.stroke();
-            ctx.restore();
         }
     }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Estrelas de fundo
         stars.forEach(s => {
             ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity})`;
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
             ctx.fill();
         });
-
-        // Chance de criar estrela cadente (2% por frame)
-        if (Math.random() < 0.02) {
-            shootingStars.push(new ShootingStar());
-        }
-
-        // Atualiza e desenha as estrelas cadentes
+        if (Math.random() < 0.015) shootingStars.push(new ShootingStar());
         shootingStars = shootingStars.filter(s => s.active);
-        shootingStars.forEach(s => {
-            s.update();
-            s.draw();
-        });
-
+        shootingStars.forEach(s => { s.update(); s.draw(); });
         requestAnimationFrame(animate);
+    }
+
+    // --- Gerador de Nuvens ---
+    const gifUrl = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnBsdGpnemR4bXlnbTl3dG55YzhkOXZjZ2x5bGJiOGU1djY3Z2diZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/xT9IgsFcDKywF7orkI/giphy.gif";
+    const totalGifs = 7; 
+
+    for (let i = 0; i < totalGifs; i++) {
+        const img = document.createElement('img');
+        img.src = gifUrl;
+        img.className = 'floating-gif';
+        img.style.top = (Math.random() * 100) - 10 + "vh";
+        const size = Math.random() * 300 + 250; 
+        img.style.width = size + "px";
+        img.style.animationDuration = (Math.random() * 20 + 25) + "s";
+        img.style.animationDelay = (Math.random() * -50) + "s";
+        document.body.appendChild(img);
     }
 
     window.addEventListener('resize', init);
