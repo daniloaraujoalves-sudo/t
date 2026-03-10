@@ -52,32 +52,41 @@
             text-align: center;
         }
 
-        /* --- AQUI ESTÁ A MUDANÇA NA FRASE --- */
         .frase {
             font-size: 3.5rem;
             margin-top: 20px;
             font-weight: bold;
             letter-spacing: -1px;
-            
-            /* 1. Definimos o degradê que você criou */
             background: linear-gradient(to bottom, #aa069f, #5e17b5, #1204ad);
-            
-            /* 2. Fazemos o fundo "prender" apenas no texto */
             -webkit-background-clip: text;
             background-clip: text;
-            
-            /* 3. Deixamos a cor original transparente para o degradê aparecer */
             -webkit-text-fill-color: transparent;
             color: transparent;
-
-            /* Brilho neon ajustado para a nova cor */
             filter: drop-shadow(0 0 15px rgba(94, 23, 181, 0.6));
+            margin-bottom: 30px; /* Espaço para o botão */
         }
 
         .gif-principal img {
             max-width: 180px;
-            filter: drop-shadow(0 0 20px #00ffff);
+            filter: drop-shadow(0 0 20px #5e17b5);
             animation: float 4s ease-in-out infinite;
+        }
+
+        /* ESTILO DO NOVO BOTÃO */
+        .btn-start {
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .btn-start img {
+            width: 200px; /* Ajuste o tamanho conforme preferir */
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        }
+
+        .btn-start:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2) drop-shadow(0 0 20px #00ffff);
         }
 
         @keyframes float {
@@ -92,13 +101,17 @@
 
 <main>
     <div class="gif-principal">
-        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXZidWd4dXVvYmFnNHl3MmtlNThuY2ZlZDV2bHRoYm03aWtkYzJteCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/Wcz2tmefmBHbWO8y6c/giphy.gif" alt="Astronauta">
     </div>
+    
     <h1 class="frase">Hello, World!</h1>
+
+    <div class="btn-start">
+        <img src="https://files.oaiusercontent.com/file-K1S68Dk9L6H2Dq7M5N3B4A?se=2026-03-10T11%3A44%3A26Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D1e2b5c4a-6d8e-4a8b-9e1a-5c4a6d8e4a8b.png&sig=...seu_link_aqui..." alt="Start Button">
+    </div>
 </main>
 
 <script>
-    // Todo o seu JavaScript das estrelas e nuvens permanece igual aqui...
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
