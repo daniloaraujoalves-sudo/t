@@ -52,23 +52,31 @@
             text-align: center;
         }
 
+        /* --- AQUI ESTÁ A MUDANÇA NA FRASE --- */
         .frase {
             font-size: 3.5rem;
             margin-top: 20px;
             font-weight: bold;
             letter-spacing: -1px;
+            
+            /* 1. Definimos o degradê que você criou */
             background: linear-gradient(to bottom, #aa069f, #5e17b5, #1204ad);
+            
+            /* 2. Fazemos o fundo "prender" apenas no texto */
             -webkit-background-clip: text;
             background-clip: text;
+            
+            /* 3. Deixamos a cor original transparente para o degradê aparecer */
             -webkit-text-fill-color: transparent;
             color: transparent;
+
+            /* Brilho neon ajustado para a nova cor */
             filter: drop-shadow(0 0 15px rgba(94, 23, 181, 0.6));
         }
 
         .gif-principal img {
             max-width: 180px;
-            /* Ajustei o brilho para combinar com o novo GIF */
-            filter: drop-shadow(0 0 20px #5e17b5);
+            filter: drop-shadow(0 0 20px #00ffff);
             animation: float 4s ease-in-out infinite;
         }
 
@@ -84,12 +92,13 @@
 
 <main>
     <div class="gif-principal">
-        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXZidWd4dXVvYmFnNHl3MmtlNThuY2ZlZDV2bHRoYm03aWtkYzJteCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/Wcz2tmefmBHbWO8y6c/giphy.gif" alt="Astronauta">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG1pYTd5ZWJzaHdtenRtczZqcTNjc2ozazh5Z3RhMWFqc3RxbTh1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dHM/qUABlXKRRvfQobzIXp/giphy.gif" alt="Astronauta">
     </div>
     <h1 class="frase">Hello, World!</h1>
 </main>
 
 <script>
+    // Todo o seu JavaScript das estrelas e nuvens permanece igual aqui...
     const canvas = document.getElementById('starCanvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
